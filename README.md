@@ -38,8 +38,8 @@ Follow these steps to set up the project from scratch:
 
 1. **Clone the repo**
    ```bash
-   git clone https://github.com/yourname/fullstack-data-pipeline.git
-   cd fullstack-data-pipeline
+   git clone https://github.com/gtrujilloes/pyne_poc.git
+   cd pyne_poc
 
 2. **Set up GCP**
 - Create a project and enable BigQuery, Cloud Storage, and Cloud Functions.
