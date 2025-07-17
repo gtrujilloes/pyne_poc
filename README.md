@@ -32,3 +32,55 @@ This project demonstrates an end-to-end data pipeline built on **GCP**. It inges
 
 ## 📂 Project Structure
 
+## 🛠️ Bootstrapping the Environment
+
+Follow these steps to set up the project from scratch:
+
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/yourname/fullstack-data-pipeline.git
+   cd fullstack-data-pipeline
+
+2. **Set up GCP**
+- Create a project and enable BigQuery, Cloud Storage, and Cloud Functions.
+- Create a BigQuery dataset named raw_data.
+- Create a Cloud Storage bucket for raw data landing.
+- Create and download a service account JSON key with BigQuery permissions.
+
+3. **Set up Python environment (for data ingestion)**
+
+```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r ingestion/requirements.txt
+```
+
+4. **Set environment variables**
+Create a .env file with:
+      ```bash
+      GCP_PROJECT=my-data-project
+      BQ_DATASET=raw_data
+      API_KEY=your_api_key_here
+      ```
+
+5. **Set up dbt**
+- Create a dbt Cloud project and connect it to BigQuery.
+- Clone this repo into dbt Cloud or connect GitHub repo.
+- Run dbt run and dbt test.
+
+6. **Trigger CI/CD**
+- CI pipeline runs automatically on push to main.
+- You can also trigger jobs manually from dbt Cloud.
+
+
+
+      
+
+
+
+
+
+
+
+   
+
