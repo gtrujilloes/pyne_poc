@@ -13,7 +13,7 @@ select id
     , weight
     , min_weight
     , max_weight
-    , COALESCE((max_weight + min_weight)/2, max_weight, min_weight)                 AS avg_weight
+    , COALESCE((max_weight + min_weight)/2, max_weight, min_weight)                 AS avg_weight_2
     , bred_for
     , breed_group
     , life_span
