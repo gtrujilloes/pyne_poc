@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: dog_raw
+    database: pyne-poc
+    schema: bronze
+    tables:
+      - name: dog_api_raw
