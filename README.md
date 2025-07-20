@@ -81,7 +81,7 @@ See the looker studio dashboard [here](https://lookerstudio.google.com/reporting
 **Breed Lifespan and Weight Insights can help drive tailed product strategies for long term growth and customer-tailored products.**
 
 
-**🩺 Life span: **
+**🩺 Life span:**
 
 - The Terrier, Toy, and Non-Sporting groups exhibit the longest life spans, both in median and average, typically ranging between 12–13 years.
 - Working dogs show the shortest life spans, with a median and average of around 10 years.
