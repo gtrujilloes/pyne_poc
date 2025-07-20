@@ -12,11 +12,10 @@ This project demonstrates an end-to-end data pipeline built on **GCP**. It inges
 | Component        | Tool / Service     |
 |------------------|--------------------|
 | Ingestion        | Python + Cloud Functions |
-| Storage          | Cloud Storage, BigQuery |
-| Transformation   | dbt (Cloud)        |
-| CI/CD            | dbt Cloud Jobs |
+| Storage          | BigQuery |
+| Transformation   | dbt   |
+| CI/CD            | dbt Jobs |
 | Visualization    | Looker Studio |
-| Infra Management | GCP Console / IaC (optional) |
 
 ---
 
@@ -32,46 +31,140 @@ This project demonstrates an end-to-end data pipeline built on **GCP**. It inges
 
 ## 📂 Project Structure
 
-## 🛠️ Bootstrapping the Environment
-
-Follow these steps to set up the project from scratch:
-
-1. **Clone the repo**
-   ```bash
-   git clone https://github.com/gtrujilloes/pyne_poc.git
-   cd pyne_poc
-
-2. **Set up GCP**
-- Create a project and enable BigQuery, Cloud Storage, and Cloud Functions.
-- Create a BigQuery dataset named raw_data.
-- Create a Cloud Storage bucket for raw data landing.
-- Create and download a service account JSON key with BigQuery permissions.
-
-3. **Set up Python environment (for data ingestion)**
-
-```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    pip install -r ingestion/requirements.txt
+```
+guillermotrujilloes/
+├── guille_attemps
+   ├── pull_dogs_data.py
+   ├── Dockerfile
+   ├── requirements.txt
+├── pyne_poc
+   ├── README.md
+   ├── dbt_project.yml
+   ├── analyses
+   ├── macros
+   ├── models
+   ├── seeds...
+├── 
 ```
 
-4. **Set environment variables**
-Create a .env file with:
-      ```bash
-      GCP_PROJECT=my-data-project
-      BQ_DATASET=raw_data
-      API_KEY=your_api_key_here
-      ```
 
-5. **Set up dbt**
-- Create a dbt Cloud project and connect it to BigQuery.
-- Clone this repo into dbt Cloud or connect GitHub repo.
-- Run dbt run and dbt test.
+# 🚀 Project Bootstrap Guide (GCP-Focused)
 
-6. **Trigger CI/CD**
-- CI pipeline runs `dbt run` and `dbt test` on every pull request and deploys to production on merge to `main`.
-[![View Build Logs](https://img.shields.io/badge/dbt%20Cloud-Build%20Logs-blue)](https://cloud.getdbt.com/#/accounts/70471823478451/projects/70471823488943/jobs/70471823485704/)
+This guide outlines how to bootstrap the **Google Cloud Platform (GCP)** environment for a full-stack data pipeline project using Cloud Run, BigQuery, and DBT.
 
+---
+
+## 🔧 1. GCP Project Setup
+
+1. **Create a GCP Project**:
+
+   * Go to [GCP Console](https://console.cloud.google.com/)
+   * Create a new project (e.g., `dog-breeds-pipeline`)
+
+2. **Enable Required APIs**:
+
+   ```bash
+   gcloud services enable run.googleapis.com \
+       bigquery.googleapis.com \
+       storage.googleapis.com \
+       cloudbuild.googleapis.com \
+       cloudscheduler.googleapis.com
+   ```
+
+3. **Set GCP Project & Region**:
+
+   ```bash
+   gcloud config set project YOUR_PROJECT_ID
+   gcloud config set run/region europe-west1
+   ```
+
+---
+
+## 🛠️ 2. Cloud Storage Bucket (for Raw JSON Files)
+
+```bash
+gsutil mb -l europe-west1 gs://YOUR_BUCKET_NAME/
+```
+
+To structure by ingestion date:
+
+```bash
+gsutil cp data.json gs://YOUR_BUCKET_NAME/raw/dogs/$(date +%F)/data.json
+```
+
+---
+
+## 🏗️ 3. BigQuery Dataset & Table
+
+Create dataset:
+
+```bash
+bq mk --location=europe-west1 bronze
+```
+
+Create empty table (or let BigQuery infer schema on load):
+
+```bash
+bq mk --table pyne-poc:bronze.dog_raw_api name:STRING,weight:STRING,...
+```
+
+---
+
+## 🐍 4. Python Script for ETL
+
+Write your ETL logic in a `pull_dogs_data.py` that:
+
+* Fetches data from the API
+* Stores it in GCS (`/tmp` folder if running on Cloud Run)
+* Loads to BigQuery
+
+Example file structure:
+
+```
+project-root/
+├── pull_dogs_data.py
+├── requirements.txt
+├── Dockerfile
+```
+
+---
+
+## 🐳 5. Docker Image Build & Push
+
+```bash
+gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/dog-etl-job .
+```
+
+---
+
+## ⚙️ 6. Deploy Cloud Run Job
+
+```bash
+gcloud run jobs create dog-etl-job \
+    --image gcr.io/YOUR_PROJECT_ID/dog-etl-job \
+    --region europe-west1
+```
+
+To run the job:
+
+```bash
+gcloud run jobs execute dog-etl-job --region europe-west1
+```
+
+---
+
+## 📅 7. Schedule with Cloud Scheduler
+
+Create a Cloud Scheduler job via UI or CLI:
+
+```bash
+gcloud scheduler jobs create http run-dog-job \
+  --schedule="0 2 * * *" \
+  --uri="https://REGION-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/YOUR_PROJECT_ID/jobs/dog-etl-job:run" \
+  --http-method=POST \
+  --oauth-service-account-email=SCHEDULER_SA@YOUR_PROJECT_ID.iam.gserviceaccount.com \
+  --location=europe-west1
+```
 
 
 ## 💡 Findings
