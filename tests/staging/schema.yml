@@ -3,3 +3,11 @@ data_tests:
   - name: dogs_weight
     description: >
       This test ensures that there are no dogs weigthing a negative amount or more than 100KGs.
+
+  - name: null_rates
+    description: >
+      This test ensures that there are no more than 10% null values in the columns that are relevant for the analysis.
+
+  - name: row_counts
+    description: >
+      This test ensures that there are no more than 200 rows (each pipeline run provides 172 rows).           
