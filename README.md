@@ -69,8 +69,10 @@ Create a .env file with:
 - Run dbt run and dbt test.
 
 6. **Trigger CI/CD**
-- CI pipeline runs automatically on push to main.
-- You can also trigger jobs manually from dbt Cloud.
+- CI pipeline runs `dbt run` and `dbt test` on every pull request and deploys to production on merge to `main`.
+[![View Build Logs](https://img.shields.io/badge/dbt%20Cloud-Build%20Logs-blue)](https://cloud.getdbt.com/#/accounts/70471823478451
+/projects/70471823488943/jobs/70471823485704/)
+
 
 
 
