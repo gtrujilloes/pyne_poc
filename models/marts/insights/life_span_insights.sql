@@ -2,11 +2,11 @@ with lifespan_stats as (
   
   select breed_group
     -- Calculate average as the mean of min and max lifespan
-    , avg(expected_life_span)                                as avg_life_span
-    , approx_quantiles(expected_life_span, 2)[OFFSET(1)]     as median_life_span
-    , min(min_life_span)                                     as min_life_span
-    , max(max_life_span)                                     as max_life_span
-    , count(*)                                               as breed_count
+    , avg(expected_life_span)                                   as avg_life_span
+    , approx_quantiles(expected_life_span, 100)[OFFSET(50)]     as median_life_span
+    , min(min_life_span)                                        as min_life_span
+    , max(max_life_span)                                        as max_life_span
+    , count(*)                                                  as breed_count
   
   from {{ ref('dogs_facts') }}
   group by breed_group

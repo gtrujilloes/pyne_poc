@@ -1,4 +1,4 @@
-with source as as (
+with source as (
     select *
     from {{ ref('dogs_facts') }}
 
@@ -16,9 +16,9 @@ with source as as (
 
   from source
 
-),
+)
 
-weight_dist as (
+, weight_dist as (
 
   select breed_group
         , weight_class
@@ -30,8 +30,7 @@ weight_dist as (
 
 , total_per_breed as (
 
-  select
-    , breed_group
+  select breed_group
     , count(*)                  as total_count
   from classified_weights
   group by all
@@ -41,10 +40,10 @@ weight_dist as (
 , weight_stats as (
 
   select breed_group
-    , avg(expected_weight)                          as avg_weight
-    , approx_quantiles(expected_weight)[OFFSET(1)]  as median_weight
-    , min(expected_weight)                          as min_weight
-    , max(expected_weight)                          as max_weight
+    , avg(expected_weight)                                  as avg_weight
+    , approx_quantiles(expected_weight,100)[OFFSET(50)]     as median_weight
+    , min(expected_weight)                                  as min_weight
+    , max(expected_weight)                                  as max_weight
   from source
   group by all
 
