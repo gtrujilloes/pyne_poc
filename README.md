@@ -14,8 +14,8 @@ This project demonstrates an end-to-end data pipeline built on **GCP**. It inges
 | Ingestion        | Python + Cloud Functions |
 | Storage          | Cloud Storage, BigQuery |
 | Transformation   | dbt (Cloud)        |
-| CI/CD            | GitHub Actions + dbt Cloud Jobs |
-| Visualization    | Looker Studio / BigQuery SQL |
+| CI/CD            | dbt Cloud Jobs |
+| Visualization    | Looker Studio |
 | Infra Management | GCP Console / IaC (optional) |
 
 ---
@@ -25,7 +25,7 @@ This project demonstrates an end-to-end data pipeline built on **GCP**. It inges
 1. **Ingest**: Cloud Function fetches semi-structured data (JSON) from a public API.
 2. **Store**: Raw data is stored in Cloud Storage and loaded into BigQuery (raw schema).
 3. **Transform**: dbt models clean and structure the data into analytics-ready tables.
-4. **Deploy**: GitHub CI/CD triggers dbt Cloud jobs on merge to `main`.
+4. **Deploy**: CI/CD triggers dbt Cloud jobs on merge to `main`.
 5. **Visualize**: Clean data exposed via SQL views or Looker dashboards.
 
 ---
@@ -70,19 +70,25 @@ Create a .env file with:
 
 6. **Trigger CI/CD**
 - CI pipeline runs `dbt run` and `dbt test` on every pull request and deploys to production on merge to `main`.
-[![View Build Logs](https://img.shields.io/badge/dbt%20Cloud-Build%20Logs-blue)](https://cloud.getdbt.com/#/accounts/70471823478451
-/projects/70471823488943/jobs/70471823485704/)
+[![View Build Logs](https://img.shields.io/badge/dbt%20Cloud-Build%20Logs-blue)](https://cloud.getdbt.com/#/accounts/70471823478451/projects/70471823488943/jobs/70471823485704/)
 
 
 
+## 💡 Findings
 
-      
+See the looker studio dashboard [here](https://lookerstudio.google.com/reporting/c5eb01a2-525f-4736-9e4a-56e56d5e1191/page/JwzRF/edit). 
 
-
-
-
-
+**Breed Lifespan and Weight Insights can help drive tailed product strategies for long term growth and customer-tailored products.**
 
 
-   
+**🩺 Life span: **
 
+- The Terrier, Toy, and Non-Sporting groups exhibit the longest life spans, both in median and average, typically ranging between 12–13 years.
+- Working dogs show the shortest life spans, with a median and average of around 10 years.
+- For all breed groups, median and average life spans are closely aligned (+/- 1 year), suggesting symmetrical life span distributions.
+- The market for each breed will depend on their life span. Focus on long-lived breeds (Terrier, Toy, Non-Sporting) for long-term business such as senior dog items or lifetime insurance.
+- For short-lived, working and hound breeds, developing shorter-term and flexible activities will be key. An example of this could be activity-focused products.
+
+**🏋🏼‍♂️ Weight distribution:**
+- While almost all dogs in certain breeds fall into a single weight class (i.e., all Toy are small, and nearly all Working are large), others show a more varied distribution of weights (i.e., Sporting and Hound show a roughly half-and-half proportion between large and medium).
+- The weight distribution within each breed group directly affects the need for size-specific products and care. Breeds that fall entirely into one size class can be served with more compact and precisely tailored solutions.
