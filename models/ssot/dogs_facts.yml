@@ -1,0 +1,70 @@
+
+version: 2
+
+models:
+    - name: dogs_facts
+      description: >
+        "This is the source of truth model hosting the key stats for each dog.
+        For more information check out the [readme file](https://github.com/gtrujilloes/pyne_poc/blob/main/README.md)"
+
+      columns:
+          - name: id
+            data_type: integer
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+
+          - name: name
+            data_type: string
+            description: "The name of the dog"
+          
+          - name: weight
+            data_type: string
+            description: "The weight of the dog in string format. It shows the minimum and maximum weight"
+            tests:
+                - not_null
+
+          - name: min_weight
+            data_type: float
+            description: "The weight of the dog in numeric format. It shows the minimum weight in KGs"
+
+          - name: max_weight
+            data_type: float
+            description: "The weight of the dog in numeric format. It shows the maximum weight in KGs"
+
+          - name: expected_weight
+            data_type: float
+            description: "The average weight of the dog in numeric format"            
+
+          - name: bred_for
+            data_type: string
+            description: "The use each bread typically has from a human point of view"
+
+          - name: breed_group
+            data_type: string
+            description: "The group breed categorisation"
+            tests:
+                - not_null
+                - accepted_values:
+                      values: ['Sporting', 'Working', 'Herding', 'Hound', 'Terrier', 'Toy', 'Mixed', 'Non-Sporting']
+                      
+          - name: life_span
+            data_type: string
+            description: "The amount of years each dog lives in an string format. It shows both MAX and MIN"
+
+          - name: min_life_span
+            data_type: float
+            description: "The minimum amount of years each dog lives"
+
+          - name: max_life_span
+            data_type: float
+            description: "The maximum amount of years each dog lives"
+
+          - name: expected_life_span
+            data_type: float
+            description: "The average weight of the dog in numeric format"                 
+
+          - name: temperament
+            data_type: string
+            description: "The temperament description of each dog"
