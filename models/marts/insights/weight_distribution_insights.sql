@@ -43,22 +43,21 @@ weight_dist as (
   select breed_group
     , avg(expected_weight)                          as avg_weight
     , approx_quantiles(expected_weight)[OFFSET(1)]  as median_weight
-    , min(expected_weight)                          as min_weight,
+    , min(expected_weight)                          as min_weight
     , max(expected_weight)                          as max_weight
   from source
   group by all
 
 )
 
-select
-  weight_dist.breed_group,
-  weight_dist.weight_class,
-  weight_dist.class_count,
-  round(weight_dist.class_count * 100.0 / total_per_breed.total_count, 2) as pct_class_share,
-  weight_stats.avg_weight,
-  weight_stats.median_weight,
-  weight_stats.min_weight,
-  weight_stats.max_weight
+select weight_dist.breed_group
+  , weight_dist.weight_class
+  , weight_dist.class_count
+  , round(weight_dist.class_count * 100.0 / total_per_breed.total_count, 2) as pct_class_share
+  , weight_stats.avg_weight
+  , weight_stats.median_weight
+  , weight_stats.min_weight
+  , weight_stats.max_weight
 from weight_dist
     left join total_per_breed on weight_dist.breed_group = total_per_breed.breed_group
     left join weight_stats on weight_dist.breed_group = weight_stats.breed_group
