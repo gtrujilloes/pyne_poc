@@ -1,7 +1,7 @@
 version: 2
 
 models:
-    - name: life_span_insigjhts
+    - name: life_span_insights
       description: >
         "This is the mart model hosting the different metric calculations regarding the life_span of the dogs.
         For more information check out the [readme file](https://github.com/gtrujilloes/pyne_poc/blob/main/README.md)"
