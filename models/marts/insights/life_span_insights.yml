@@ -1,0 +1,33 @@
+version: 2
+
+models:
+    - name: life_span_insigjhts
+      description: >
+        "This is the mart model hosting the different metric calculations regarding the life_span of the dogs.
+        For more information check out the [readme file](https://github.com/gtrujilloes/pyne_poc/blob/main/README.md)"
+
+      columns:
+          - name: breed_group
+            data_type: string
+            description: "The primary key for this table which is each breed_group"
+            tests:
+                - unique
+                - not_null
+
+          - name: avg_life_span
+            data_type: float   
+
+          - name: median_life_span
+            data_type: float   
+
+          - name: min_life_span
+            data_type: float                                           
+
+          - name: max_life_span
+            data_type: float 
+            
+          - name: breed_count
+            data_type: float
+
+          - name: life_span_rank
+            data_type: float                                                                               
