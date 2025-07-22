@@ -3,7 +3,7 @@ version: 2
 models:
     - name: life_span_insights
       description: >
-        "This is the mart model hosting the different metric calculations regarding the life_span of the different breeds.
+        "This is the mart model hosting the different metric calculations regarding the life_span of the different dogs breeds.
         For more information check out the [readme file](https://github.com/gtrujilloes/pyne_poc/blob/main/README.md)"
 
       columns:
