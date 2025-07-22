@@ -26,7 +26,7 @@ models:
 
           - name: min_weight
             data_type: float
-            description: "The weight of the dog in numeric format. It shows the minimum weight in KGs"
+            description: "The weight of the dog in numeric format. It shows the minimum weight in KGs"           
 
           - name: max_weight
             data_type: float
@@ -55,6 +55,11 @@ models:
           - name: min_life_span
             data_type: float
             description: "The minimum amount of years each dog lives"
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 150
+                  strictly: false             
 
           - name: max_life_span
             data_type: float
